@@ -78,7 +78,7 @@
                                         <div :id="'collapse-balas-'+message.id" class="bg-light p-2 collapse" :data-parent="'#myGroup'+message.id">
                                             <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
                                                     src="https://sekolahnesia.com/wp-content/uploads/2020/11/Foto-Profil-Default.jpg"
-                                                    width="40"><BreezeInput id="body" type="text" class="mt-1 mx-2 block w-full" v-model="form.body"/>
+                                                    width="40"><textarea id="body" type="text" class="mt-1 mx-2 block w-full" v-model="form.body"></textarea>
                                             </div>
                                             <div class="mt-2 text-right">
                                                 <button class="btn btn-outline-primary btn-sm" :disabled="form.processing" type="submit">Kirim
@@ -118,7 +118,7 @@
                                         <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
                                                 src="https://sekolahnesia.com/wp-content/uploads/2020/11/Foto-Profil-Default.jpg"
                                                 width="40">
-                                                <BreezeInput id="body" :key="'postMessage'" type="text" class="mt-1 mx-2 block w-full" v-model="form.body" />
+                                                <textarea  id="body" :key="'postMessage'" type="text" class="mt-1 mx-2 block w-full" v-model="form.body" ></textarea>
                                         </div>
                                         <div class="mt-2 text-right">
                                             <button class="btn btn-outline-primary btn-sm" :disabled="form.processing" type="submit">Kirim Pesan</button>
@@ -201,7 +201,7 @@
                   forceTLS: true
                 });
 
-                var channel = window.Echo.channel('getMessage');
+                var channel = window.Echo.channel('getMessage'+this.$props.user.slug);
                 channel.listen('.getMessage', (e)=> {
                     this.messages = e.messages
                 })

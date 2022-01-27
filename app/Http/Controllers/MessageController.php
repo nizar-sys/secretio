@@ -46,7 +46,7 @@ class MessageController extends Controller
             }
             $messages = Message::whereForUserId($user->id)->orderBy('id', 'desc')->with('replies')->get();
             // GetMessage::dispatch($messages);
-            event(new GetMessage($messages));
+            event(new GetMessage($messages, $user->slug));
 
             // shares
             $currentURL = URL::current();
@@ -83,7 +83,7 @@ class MessageController extends Controller
                 'updated_at' => date(now()),
             ]);
             $messages = Message::whereForUserId($user->id)->orderBy('id', 'desc')->with('replies')->get();
-            event(new GetMessage($messages));
+            event(new GetMessage($messages, $user->slug));
             return back();
         } catch (\Throwable $th) {
             throw $th;
@@ -106,7 +106,7 @@ class MessageController extends Controller
                 'updated_at' => date(now()),
             ]);
             $messages = Message::whereForUserId($user->id)->orderBy('id', 'desc')->with('replies')->get();
-            event(new GetMessage($messages));
+            event(new GetMessage($messages, $user->slug));
             return back();
         } catch (\Throwable $th) {
             throw $th;

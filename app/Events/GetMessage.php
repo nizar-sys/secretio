@@ -15,14 +15,16 @@ class GetMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $messages;
+    public $user_slug;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($messages)
+    public function __construct($messages, $user_slug)
     {
         $this->messages = $messages;
+        $this->user_slug = $user_slug;
     }
 
     /**
@@ -32,7 +34,7 @@ class GetMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('getMessage');
+        return new Channel('getMessage'.$this->user_slug);
     }
 
     public function broadcastAs()
