@@ -23,7 +23,7 @@ Route::get('/', function () {
         return redirect()->route('message.home', ['slug' => $user->slug]);
     }
     return Inertia::render('Auth/Login');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

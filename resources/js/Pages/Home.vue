@@ -11,10 +11,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="text-center">
-                        <Link :href="share.url" class="card-title font-weight-bold text-center h3">Beranda {{user.name}}</Link>
+                        <Link :href="share.url" class="card-title font-weight-bold text-center h3 mb-2">Beranda {{user.name}}</Link>
                         <div class="align-items-center">
                             <a :href="share.facebook" target="_blank"><i class="fa fa-facebook border p-3 rounded mr-1"></i></a>
                             <a :href="share.tweeter" target="_blank"><i class="fa fa-twitter border p-3 rounded mr-1"></i></a>
+                            <a :href="share.wa" target="_blank"><i class="fa fa-whatsapp border p-3 rounded mr-1"></i></a>
 
                             <button @click.prevent="copyURL(share.url)"><i class="far fa-copy border p-3 rounded mr-1"></i></button>
                         </div>
@@ -50,6 +51,7 @@
                                                     class="ml-1">Lihat Balasan</span></div>
                                         </div>
                                     </div>
+                                    
                                     <div :id="'collapse-balasan-'+message.id" class="p-2 collapse" :data-parent="'#myGroupBalasan'+message.id">
                                         <div class="d-flex justify-content-center row" v-for="reply in message.replies" :key="reply.id" v-if="message.replies.length > 0">
                                             <div class="col-md-8">
@@ -73,9 +75,8 @@
                                             <p>Ngga ada balasan, nih.</p>
                                         </div>
                                     </div>
-
-                                    <form @submit.prevent="postReplyMessage(message.id)">
-                                        <div :id="'collapse-balas-'+message.id" class="bg-light p-2 collapse" :data-parent="'#myGroup'+message.id">
+                                    <div :id="'collapse-balas-'+message.id" class="bg-light p-2 collapse" :data-parent="'#myGroupBalasan'+message.id">
+                                        <form @submit.prevent="postReplyMessage(message.id)">
                                             <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
                                                     src="https://sekolahnesia.com/wp-content/uploads/2020/11/Foto-Profil-Default.jpg"
                                                     width="40"><textarea id="body" type="text" class="mt-1 mx-2 block w-full" v-model="form.body"></textarea>
@@ -87,9 +88,9 @@
                                                     aria-expanded="true" :aria-controls="'collapse-balas-'+message.id" :href="'#collapse-balas-'+message.id"
                                                     type="button">Batal</button>
                                             </div>
-                                        </div>
-                                    </form>
-                                    
+                                        </form>
+                                    </div>
+                                    <hr class="divider">
                                 </div>
                             </div>
                         </div>
@@ -144,7 +145,6 @@
     import { Link } from '@inertiajs/inertia-vue3';
     window.Pusher = require('pusher-js');
 
-
     export default {
         props: ['user', 'message', 'share'],
         components: {
@@ -191,6 +191,8 @@
                     },
                 })
                 this.form.reset('body')
+                $(`#collapse-balas-${id}`).collapse('hide');
+                $(`#collapse-balasan-${id}`).collapse('show');
             },
 
             EchoListen () {

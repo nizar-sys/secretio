@@ -52,7 +52,7 @@ class MessageController extends Controller
             $currentURL = URL::current();
             $facebook = 'https://www.facebook.com/sharer/sharer.php?u='.$currentURL;
             $tweeter = 'https://twitter.com/intent/tweet?text=Bagikan%20pesan%20rahasia%20ke%20'.$user->name.'%20tanpa%20diketahui%0A' . $currentURL;
-
+            $wa = 'https://wa.me/?text=' . 'Bagikan%20pesan%20rahasia%20ke%20'.$user->name.'%20tanpa%20diketahui%0A' . $currentURL;
             return Inertia::render('Home', [
                 'user' => $user,
                 'message' => $messages,
@@ -60,6 +60,7 @@ class MessageController extends Controller
                     'facebook' => $facebook,
                     'tweeter' => $tweeter,
                     'url' => $currentURL,
+                    'wa' => $wa,
                 ],
             ]);
         } catch (\Throwable $th) {

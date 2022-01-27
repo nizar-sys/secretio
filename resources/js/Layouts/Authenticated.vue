@@ -8,7 +8,10 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('message.home', $page.props.userbyslug.slug)">
+                                <Link v-if="$page.props.auth.user" :href="route('message.home', {slug: $page.props.auth.user.slug})">
+                                    <BreezeApplicationLogo class="block h-9 w-auto" />
+                                </Link>
+                                <Link v-else :href="route('home')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
